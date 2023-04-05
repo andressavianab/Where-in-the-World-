@@ -5,6 +5,8 @@ const filter = document.querySelector("#filter");
 
 const rowCards = document.querySelector("#row-cards");
 
+getapi();
+
 async function getapi() {
   const answer = await fetch(endPointAPI);
   const countries = await answer.json();
@@ -13,21 +15,31 @@ async function getapi() {
 
   filter.addEventListener("change", (e) => {
     if (e.target.value === "Africa") {
-      rowCards.innerHTML = "";
+      clearRowCards();
       cardRow(filterByRegion(countries, "Africa"));
     } else if (e.target.value === "America") {
-      rowCards.innerHTML = "";
+      clearRowCards();
       cardRow(filterByRegion(countries, "Americas"));
     } else if (e.target.value === "Asia") {
-      rowCards.innerHTML = "";
+      clearRowCards();
       cardRow(filterByRegion(countries, "Asia"));
     } else if (e.target.value === "Europe") {
-      rowCards.innerHTML = "";
+      clearRowCards();
       cardRow(filterByRegion(countries, "Europe"));
     } else if (e.target.value === "Oceania") {
-      rowCards.innerHTML = "";
+      clearRowCards();
       cardRow(filterByRegion(countries, "Oceania"));
     }
+  });
+
+  input.addEventListener("input", () => {
+    clearRowCards();
+
+    const filterBySearch = countries.filter((countrie) => {
+      return countrie.name.toLowerCase().includes(input.value.toLowerCase());
+    });
+
+    cardRow(filterBySearch);
   });
 }
 
@@ -54,4 +66,6 @@ function cardRow(arr) {
   });
 }
 
-getapi();
+function clearRowCards() {
+  rowCards.innerHTML = "";
+}
