@@ -3,7 +3,20 @@ const endPointAPI = "data.json";
 const input = document.querySelector("#input");
 const filter = document.querySelector("#filter");
 
+const body = document.body
+const switchtheme = document.querySelector('#switchtheme')
+
 const rowCards = document.querySelector("#row-cards");
+
+const themes = {
+  'light': 'dark',
+  'dark': 'light',
+}
+
+switchtheme.addEventListener('click', () => {
+  const currentTheme = body.dataset.theme
+  body.setAttribute('data-theme', themes[currentTheme] || 'light' )
+})
 
 getapi();
 
